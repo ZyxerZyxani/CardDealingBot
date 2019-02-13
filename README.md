@@ -1,3 +1,3 @@
 # CardDealingBot
 Discord bot that deals cards. Written in python.  
-More stuff comming soon
+More info comming soon
