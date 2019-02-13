@@ -1,3 +1,3 @@
 # CardDealingBot
-Discord bot that deals cards. Written in python.  
-More info comming soon
+Discord bot that deals cards, shuffles deck, etc.. Written in python.  
+Still in alpha/beta, so sooon it will come
