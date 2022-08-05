@@ -1,4 +1,3 @@
-
 import sys
 import discord
 import asyncio
@@ -18,7 +17,8 @@ z = 0
 
 @client.event
 async def on_ready():
-    print("Hello, I will be your card dealer when requested to. I promise you can trust me and nothing is rigged.")
+    channel = client.get_channel(1005054480791904366)
+    await channel.send("Hello, I will be your card dealer when requested to. I promise you can trust me and nothing is rigged.")
 
 deck = []
 x = int
@@ -92,18 +92,18 @@ async def draw(ctx, x):
 #        return
 #    else:
     msg = "{}".format(deck[:y])
-    await client.send_message(ctx.message.author, msg)
+    await ctx.message.author.send (msg)
 #    msg = "{ctx.message.author.mention}".format
 #    msg0 = format(msg)
     msg1 ="{} has drawn {} card(s).".format(ctx.message.author.mention, y)
-    await client.say(msg1)
+    await ctx.message.channel.send(msg1)
     del deck[:y]
 
 @client.command(pass_context=True)
 async def drawu(ctx, x):
     y = int(x)
     msg = "{} drew {}".format(ctx.message.author.mention, deck[:y])
-    await client.send_message(ctx.message.channel, msg)
+    await ctx.message.channel.send(msg)
     del deck[:y]
 
 @client.command(pass_context=True)
@@ -111,27 +111,27 @@ async def putin(ctx, x, u):
     var = str(u)
     if var in deck:
         msg = "Whoa there silly, {} is already in the deck. Are you a cheater? Õ.o".format(u)
-        await client.send_message(ctx.message.channel, msg)
+        await ctx.message.channel.send(msg)
     elif not var in deck and str.isdigit(x) and int(x) != 0 and var in cdeck:
         deck.insert(int(x)-1, u)
         msg = "{} put {} on place {} from the top of the deck".format(ctx.message.author.mention, u, x)
-        await client.send_message(ctx.message.channel, msg)
+        await ctx.message.channel.send(msg)
     elif not var in deck and str.isdigit(x) and int(x) ==0 and var in cdeck:
         deck.append(u)
         msg = "{} put {} at the bottom of the deck".format(ctx.message.author.mention, u)
-        await client.send_message(ctx.message.channel, msg)
+        await ctx.message.channel.send(msg)
 
     elif not var in deck and not str.isdigit(x) and var in cdeck:
         deck.append(var)
         msg = "{} put {} into the deck and shuffled it.".format(ctx.message.author.mention, u)
         random.shuffle(deck)
-        await client.send_message(ctx.message.channel, msg)
+        await ctx.message.channel.send(msg)
     elif not var in cdeck:
         msg = "Whoa there silly, {} is not something that belongs in this deck. Please, get it away from me!".format(u)
-        await client.send_message(ctx.message.channel, msg)
+        await ctx.message.channel.send(msg)
     else:
         msg = "I don't know what the fuck you wrote but this was not predicted. You have made me get a weird error. -sadface-"
-        await client.send_message(ctx.message.channel, msg)
+        await ctx.message.channel.send(msg)
 
 @client.command(pass_context=True)
 async def sdeck(ctx):
@@ -205,7 +205,7 @@ async def sdeck(ctx):
 @client.command(pass_context=True)
 async def ldeck(ctx):
     msg = "{} cards left in the deck.".format(len(deck))
-    await client.say (msg)
+    await ctx.message.channel.send(msg)
 
 @client.command(pass_context=True)
 async def cdeck(ctx):
@@ -214,7 +214,7 @@ async def cdeck(ctx):
 #        msg += "{}\n".format(deck[:a])
 #        a += 1
     msg = "{}".format(deck)
-    await client.say(msg)
+    await ctx.message.channel.send(msg)
 
 @client.command()
 async def close(ctx, mirror):
